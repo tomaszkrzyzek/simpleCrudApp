@@ -1,2 +1,0 @@
-clear
-nodejs app.js
