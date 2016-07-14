@@ -6,18 +6,16 @@ var graphDatabase = Promise.promisifyAll(neo4j).GraphDatabase;
 var neodb = new graphDatabase('http://neo4j:password@localhost:7474');
 
 module.exports = {
-  getProject: getProject,
-  updateProject: updateProject,
-  createProject: createProject,
-  deleteProject: deleteProject,
-  getAllProjects: getAllProjects
+  getTask: getTask,
+  updateTask: updateTask,
+  createTask: createTask,
+  deleteTask: deleteTask,
+  getAllTasks: getAllTasks
 };
 
-function getProject(id){
+function getTask(id){
 	var query = [
-		'MATCH (n: Project)',
-		'WHERE id(n) = {id}',
-		'RETURN n'
+		// @TODO
 	];
 
 	var params = {
@@ -30,11 +28,9 @@ function getProject(id){
 	});
 }
 
-function deleteProject(id){
+function deleteTask(id){
 	var query = [
-		'MATCH (n:Project) WHERE ID(n)={id}',
-		'OPTIONAL MATCH (n)-[r]-()',
-		'DELETE r, n'
+		// @TODO
 	];
 
 	var params = {
@@ -47,10 +43,9 @@ function deleteProject(id){
 	});
 }
 
-function getAllProjects(){
+function getAllTasks(){
 	var query = [
-    'MATCH (n: Project)',
-    'RETURN n'
+    // @TODO
 	];
 
 	var params = {
@@ -62,11 +57,10 @@ function getAllProjects(){
 	});
 }
 
-function createProject(name, identifier, description){
+function createTask(name, identifier, description){
 
  var query = [
-   'CREATE (n:Project { name : {name} , identifier: {identifier}, description: {description} })',
-   'return n'
+   // @TODO
   ];
 
   var params = {
@@ -81,16 +75,11 @@ function createProject(name, identifier, description){
   });
 }
 
-function updateProject(id, name, identifier, description)
+function updateTask(id, name, identifier, description)
 {
     var query =
     [
-	       'MATCH (n:Project)',
-         'WHERE id(n) = {id}',
-	       'SET n.name = {name}',
-         'SET n.identifier = {identifier}',
-         'SET n.description = {description}',
-	       'RETURN n'
+	       // @TODO
     ];
 
     var params = {id: Number(id), name: name, identifier: identifier, description: description};
