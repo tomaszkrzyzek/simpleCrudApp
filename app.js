@@ -3,11 +3,11 @@ var express = require('express');
 var app = express();
 var cors = require('cors');
 var bodyParser = require('body-parser');
-var todoRouter = require('./modules/todo/routes/todo.router');
+var projectManagerRouter = require('./modules/projectManager/routes/projectManager.router');
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use(todoRouter);
+app.use(projectManagerRouter);
 
 process.on('unhandledRejection', function(reason, p){
     console.log("Possibly Unhandled Rejection at: Promise ", p, " reason: ", reason);

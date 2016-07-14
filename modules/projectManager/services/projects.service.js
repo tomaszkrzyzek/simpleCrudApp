@@ -6,14 +6,14 @@ var graphDatabase = Promise.promisifyAll(neo4j).GraphDatabase;
 var neodb = new graphDatabase('http://neo4j:password@localhost:7474');
 
 module.exports = {
-  getNode: getNode,
-  deleteNode: deleteNode,
-  getAllNodes: getAllNodes,
-  createNode: createNode,
-  updateNode: updateNode
+  getProject: getProject,
+  updateProject: updateProject,
+  createProject: createProject,
+  deleteProject: deleteProject,
+  getAllProjects: getAllProjects
 };
 
-function getNode(id){
+function getProject(id){
 	var query = [
 		'MATCH (n: Project)',
 		'WHERE id(n) = {id}',
@@ -30,7 +30,7 @@ function getNode(id){
 	});
 }
 
-function deleteNode(id){
+function deleteProject(id){
 	var query = [
 		'MATCH (n:Project) WHERE ID(n)={id}',
 		'OPTIONAL MATCH (n)-[r]-()',
@@ -47,7 +47,7 @@ function deleteNode(id){
 	});
 }
 
-function getAllNodes(){
+function getAllProjects(){
 	var query = [
     'MATCH (n)',
     'RETURN n'
@@ -62,7 +62,7 @@ function getAllNodes(){
 	});
 }
 
-function createNode(name, identifier, description){
+function createProject(name, identifier, description){
 
  var query = [
    'CREATE (new:Project { name : {name} , identifier: {identifier}, description: {description} })',
@@ -81,7 +81,7 @@ function createNode(name, identifier, description){
   });
 }
 
-function updateNode(id, name, identifier, description)
+function updateProject(id, name, identifier, description)
 {
     var query =
     [
@@ -99,4 +99,4 @@ function updateNode(id, name, identifier, description)
     query : query.join('\n'),
     params: params
     });
-}
+}  
