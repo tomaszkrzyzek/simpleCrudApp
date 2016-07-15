@@ -17,8 +17,8 @@ function get@component (req, res, next) {
  });
 }
 
-function getAll@components(req, res, next) {
- service.getAll@components().then(function(data){
+function getAll@component(req, res, next) {
+ service.getAll@component().then(function(data){
   res.send(data);
  });
 }
@@ -41,5 +41,5 @@ module.exports = {
   update@component: update@component,
   create@component: create@component,
   delete@component: delete@component,
-  getAll@components: getAll@components
+  getAll@component: getAll@component
 };

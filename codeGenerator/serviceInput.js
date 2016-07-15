@@ -10,7 +10,7 @@ module.exports = {
   update@component: update@component,
   create@component: create@component,
   delete@component: delete@component,
-  getAll@components: getAll@components
+  getAll@component: getAll@component
 };
 
 function get@component(id){
@@ -43,7 +43,7 @@ function delete@component(id){
 	});
 }
 
-function getAll@components(){
+function getAll@component(){
 	var query = [
     // @TODO
 	];
@@ -57,7 +57,6 @@ function getAll@components(){
 	});
 }
 
-// possible problem due to plural name 
 function create@component(name, identifier, description){
 
  var query = [
