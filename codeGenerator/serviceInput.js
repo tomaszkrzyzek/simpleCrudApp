@@ -6,14 +6,14 @@ var graphDatabase = Promise.promisifyAll(neo4j).GraphDatabase;
 var neodb = new graphDatabase('http://neo4j:password@localhost:7474');
 
 module.exports = {
-  getFeature: getFeature,
-  updateFeature: updateFeature,
-  createFeature: createFeature,
-  deleteFeature: deleteFeature,
-  getAllFeatures: getAllFeatures
+  get@component: get@component,
+  update@component: update@component,
+  create@component: create@component,
+  delete@component: delete@component,
+  getAll@components: getAll@components
 };
 
-function getFeature(id){
+function get@component(id){
 	var query = [
 		// @TODO
 	];
@@ -28,7 +28,7 @@ function getFeature(id){
 	});
 }
 
-function deleteFeature(id){
+function delete@component(id){
 	var query = [
 		// @TODO
 	];
@@ -43,7 +43,7 @@ function deleteFeature(id){
 	});
 }
 
-function getAllFeatures(){
+function getAll@components(){
 	var query = [
     // @TODO
 	];
@@ -57,7 +57,8 @@ function getAllFeatures(){
 	});
 }
 
-function createFeature(name, identifier, description){
+// possible problem due to plural name 
+function create@component(name, identifier, description){
 
  var query = [
    // @TODO
@@ -72,7 +73,7 @@ function createFeature(name, identifier, description){
   });
 }
 
-function updateFeature(id, name, identifier, description)
+function update@component(id, name, identifier, description)
 {
     var query =
     [
