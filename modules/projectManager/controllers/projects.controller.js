@@ -15,8 +15,8 @@ function getProject (req, res, next) {
  });
 }
 
-function getAllProjects(req, res, next) {
- service.getAllProjects().then(function(data){
+function getAllProject(req, res, next) {
+ service.getAllProject().then(function(data){
   res.send(data);
  });
 }
@@ -39,5 +39,5 @@ module.exports = {
   updateProject: updateProject,
   createProject: createProject,
   deleteProject: deleteProject,
-  getAllProjects: getAllProjects
+  getAllProject: getAllProject
 };

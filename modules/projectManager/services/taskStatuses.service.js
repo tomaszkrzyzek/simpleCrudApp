@@ -6,14 +6,14 @@ var graphDatabase = Promise.promisifyAll(neo4j).GraphDatabase;
 var neodb = new graphDatabase('http://neo4j:password@localhost:7474');
 
 module.exports = {
-  getTask: getTask,
-  updateTask: updateTask,
-  createTask: createTask,
-  deleteTask: deleteTask,
-  getAllTask: getAllTask
+  getTaskStatus: getTaskStatus,
+  updateTaskStatus: updateTaskStatus,
+  createTaskStatus: createTaskStatus,
+  deleteTaskStatus: deleteTaskStatus,
+  getAllTaskStatus: getAllTaskStatus
 };
 
-function getTask(id){
+function getTaskStatus(id){
 	var query = [
 		// @TODO
 	];
@@ -28,7 +28,7 @@ function getTask(id){
 	});
 }
 
-function deleteTask(id){
+function deleteTaskStatus(id){
 	var query = [
 		// @TODO
 	];
@@ -43,7 +43,7 @@ function deleteTask(id){
 	});
 }
 
-function getAllTask(){
+function getAllTaskStatus(){
 	var query = [
     // @TODO
 	];
@@ -57,7 +57,7 @@ function getAllTask(){
 	});
 }
 
-function createTask(name, identifier, description){
+function createTaskStatus(name, identifier, description){
 
  var query = [
    // @TODO
@@ -72,7 +72,7 @@ function createTask(name, identifier, description){
   });
 }
 
-function updateTask(id, name, identifier, description)
+function updateTaskStatus(id, name, identifier, description)
 {
     var query =
     [

@@ -15,8 +15,8 @@ function getUser (req, res, next) {
  });
 }
 
-function getAllUsers(req, res, next) {
- service.getAllUsers().then(function(data){
+function getAllUser(req, res, next) {
+ service.getAllUser().then(function(data){
   res.send(data);
  });
 }
@@ -39,5 +39,5 @@ module.exports = {
   updateUser: updateUser,
   createUser: createUser,
   deleteUser: deleteUser,
-  getAllUsers: getAllUsers
+  getAllUser: getAllUser
 };

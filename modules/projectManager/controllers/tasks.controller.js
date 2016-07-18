@@ -15,8 +15,8 @@ function getTask (req, res, next) {
  });
 }
 
-function getAllTasks(req, res, next) {
- service.getAllTasks().then(function(data){
+function getAllTask(req, res, next) {
+ service.getAllTask().then(function(data){
   res.send(data);
  });
 }
@@ -39,5 +39,5 @@ module.exports = {
   updateTask: updateTask,
   createTask: createTask,
   deleteTask: deleteTask,
-  getAllTasks: getAllTasks
+  getAllTask: getAllTask
 };

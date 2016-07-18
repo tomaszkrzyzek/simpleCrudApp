@@ -10,7 +10,7 @@ module.exports = {
   updateProject: updateProject,
   createProject: createProject,
   deleteProject: deleteProject,
-  getAllProjects: getAllProjects
+  getAllProject: getAllProject
 };
 
 function getProject(id){
@@ -47,7 +47,7 @@ function deleteProject(id){
 	});
 }
 
-function getAllProjects(){
+function getAllProject(){
 	var query = [
     'MATCH (n: Project)',
     'RETURN n'

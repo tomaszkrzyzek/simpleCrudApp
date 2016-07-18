@@ -15,8 +15,8 @@ function getFeature (req, res, next) {
  });
 }
 
-function getAllFeatures(req, res, next) {
- service.getAllFeatures().then(function(data){
+function getAllFeature(req, res, next) {
+ service.getAllFeature().then(function(data){
   res.send(data);
  });
 }
@@ -39,5 +39,5 @@ module.exports = {
   updateFeature: updateFeature,
   createFeature: createFeature,
   deleteFeature: deleteFeature,
-  getAllFeatures: getAllFeatures
+  getAllFeature: getAllFeature
 };

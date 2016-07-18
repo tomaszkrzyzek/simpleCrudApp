@@ -10,7 +10,7 @@ module.exports = {
   updateFeature: updateFeature,
   createFeature: createFeature,
   deleteFeature: deleteFeature,
-  getAllFeatures: getAllFeatures
+  getAllFeature: getAllFeature
 };
 
 function getFeature(id){
@@ -43,7 +43,7 @@ function deleteFeature(id){
 	});
 }
 
-function getAllFeatures(){
+function getAllFeature(){
 	var query = [
     // @TODO
 	];

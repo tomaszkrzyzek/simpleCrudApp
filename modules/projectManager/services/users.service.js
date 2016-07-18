@@ -10,7 +10,7 @@ module.exports = {
   updateUser: updateUser,
   createUser: createUser,
   deleteUser: deleteUser,
-  getAllUsers: getAllUsers
+  getAllUser: getAllUser
 };
 
 function getUser(id){
@@ -43,7 +43,7 @@ function deleteUser(id){
 	});
 }
 
-function getAllUsers(){
+function getAllUser(){
 	var query = [
     // @TODO
 	];
