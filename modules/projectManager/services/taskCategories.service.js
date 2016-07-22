@@ -15,7 +15,9 @@ module.exports = {
 
 function getTaskCategory(id){
 	var query = [
-		// @TODO
+    'MATCH (n: TaskCategory)',
+		'WHERE id(n) = {id}',
+		'RETURN n'
 	];
 
 	var params = {
@@ -30,7 +32,8 @@ function getTaskCategory(id){
 
 function deleteTaskCategory(id){
 	var query = [
-		// @TODO
+    'MATCH (n: TaskCategory) WHERE ID(n)={id}',
+		'DELETE n'
 	];
 
 	var params = {
@@ -45,7 +48,8 @@ function deleteTaskCategory(id){
 
 function getAllTaskCategory(){
 	var query = [
-    // @TODO
+    'MATCH (n: TaskCategory)',
+    'RETURN n'
 	];
 
 	var params = {
@@ -57,13 +61,15 @@ function getAllTaskCategory(){
 	});
 }
 
-function createTaskCategory(name, identifier, description){
+function createTaskCategory(category){
 
  var query = [
-   // @TODO
+   'CREATE (n: TaskCategory {category : {category}})',
+   'RETURN n'
   ];
 
   var params = {
+    category: category
   };
 
  return neodb.cypherAsync({
@@ -72,14 +78,19 @@ function createTaskCategory(name, identifier, description){
   });
 }
 
-function updateTaskCategory(id, name, identifier, description)
+function updateTaskCategory(id, category)
 {
     var query =
     [
-	       // @TODO
+      'MATCH (n: TaskCategory)',
+      'WHERE id(n) = {id}',
+      'SET n.category = {category}',
+      'RETURN n'
     ];
 
     var params = {
+      id: Number(id),
+      category: category
     };
 
     return neodb.cypherAsync({

@@ -15,7 +15,9 @@ module.exports = {
 
 function getTaskStatus(id){
 	var query = [
-		// @TODO
+    'MATCH (n: TaskStatus)',
+		'WHERE id(n) = {id}',
+		'RETURN n'
 	];
 
 	var params = {
@@ -30,7 +32,8 @@ function getTaskStatus(id){
 
 function deleteTaskStatus(id){
 	var query = [
-		// @TODO
+    'MATCH (n: TaskStatus) WHERE ID(n)={id}',
+		'DELETE n'
 	];
 
 	var params = {
@@ -45,7 +48,8 @@ function deleteTaskStatus(id){
 
 function getAllTaskStatus(){
 	var query = [
-    // @TODO
+    'MATCH (n: TaskStatus)',
+    'RETURN n'
 	];
 
 	var params = {
@@ -57,13 +61,15 @@ function getAllTaskStatus(){
 	});
 }
 
-function createTaskStatus(name, identifier, description){
+function createTaskStatus(status){
 
  var query = [
-   // @TODO
+   'CREATE (n: TaskStatus {status : {status}})',
+   'RETURN n'
   ];
 
   var params = {
+    status: status
   };
 
  return neodb.cypherAsync({
@@ -72,14 +78,19 @@ function createTaskStatus(name, identifier, description){
   });
 }
 
-function updateTaskStatus(id, name, identifier, description)
+function updateTaskStatus(id, status)
 {
     var query =
     [
-	       // @TODO
+      'MATCH (n: TaskStatus)',
+      'WHERE id(n) = {id}',
+      'SET n.status = {status}',
+      'RETURN n'
     ];
 
     var params = {
+      id: Number(id),
+      status: status
     };
 
     return neodb.cypherAsync({

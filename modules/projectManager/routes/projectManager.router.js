@@ -4,7 +4,6 @@ var featureCategoriesController = require('./../controllers/featureCategories.co
 var featurePrioritiesController = require('./../controllers/featurePriorities.controller');
 var featuresController = require('./../controllers/features.controller');
 var featureStatusesController = require('./../controllers/featureStatuses.controller');
-var membersController = require('./../controllers/members.controller');
 var projectsController = require('./../controllers/projects.controller');
 var taskCategoriesController = require('./../controllers/taskCategories.controller');
 var taskPrioritiesController = require('./../controllers/taskPriorities.controller');
@@ -13,6 +12,7 @@ var taskStatusesController = require('./../controllers/taskStatuses.controller')
 var taskTrackersController = require('./../controllers/taskTrackers.controller');
 var usersController = require('./../controllers/users.controller');
 var workLogsController = require('./../controllers/workLogs.controller');
+var projectMembersController = require('./../controllers/projectMembers.controller');
 
 projectManagerRouter = express.Router();
 
@@ -39,12 +39,6 @@ projectManagerRouter.put(/^\/featurestatuses\/([0-9_]+)$/, featureStatusesContro
 projectManagerRouter.delete(/^\/featurestatuses\/([0-9_]+)$/, featureStatusesController.deleteFeatureStatus);
 projectManagerRouter.get('/featurestatuses/', featureStatusesController.getAllFeatureStatus);
 projectManagerRouter.post('/featurestatuses/', featureStatusesController.createFeatureStatus);
-
-projectManagerRouter.get(/^\/members\/([0-9_]+)$/, membersController.getMember);
-projectManagerRouter.put(/^\/members\/([0-9_]+)$/, membersController.updateMember);
-projectManagerRouter.delete(/^\/members\/([0-9_]+)$/, membersController.deleteMember);
-projectManagerRouter.get('/members/', membersController.getAllMember);
-projectManagerRouter.post('/members/', membersController.createMember);
 
 projectManagerRouter.get(/^\/projects\/([0-9_]+)$/, projectsController.getProject);
 projectManagerRouter.put(/^\/projects\/([0-9_]+)$/, projectsController.updateProject);
@@ -93,5 +87,11 @@ projectManagerRouter.put(/^\/worklogs\/([0-9_]+)$/, workLogsController.updateWor
 projectManagerRouter.delete(/^\/worklogs\/([0-9_]+)$/, workLogsController.deleteWorkLog);
 projectManagerRouter.get('/worklogs/', workLogsController.getAllWorkLog);
 projectManagerRouter.post('/worklogs/', workLogsController.createWorkLog);
+
+projectManagerRouter.get(/^\/projectmembers\/([0-9_]+)$/, projectMembersController.getAllProjectMember);
+projectManagerRouter.put(/^\/projectmembers\/([0-9_]+)$/, projectMembersController.updateProjectMember);
+projectManagerRouter.delete(/^\/projectmembers\/([0-9_]+)$/, projectMembersController.deleteProjectMember);
+projectManagerRouter.post('/projectmembers/', projectMembersController.createProjectMember);
+// projectManagerRouter.get('/projectmembers/', projectMembersController.getAllProjectMember);
 
 module.exports = projectManagerRouter;

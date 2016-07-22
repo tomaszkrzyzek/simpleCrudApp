@@ -15,7 +15,9 @@ module.exports = {
 
 function getFeatureStatus(id){
 	var query = [
-		// @TODO
+    'MATCH (n: FeatureStatus)',
+		'WHERE id(n) = {id}',
+		'RETURN n'
 	];
 
 	var params = {
@@ -30,7 +32,8 @@ function getFeatureStatus(id){
 
 function deleteFeatureStatus(id){
 	var query = [
-		// @TODO
+    'MATCH (n: FeatureStatus) WHERE ID(n)={id}',
+		'DELETE n'
 	];
 
 	var params = {
@@ -45,7 +48,8 @@ function deleteFeatureStatus(id){
 
 function getAllFeatureStatus(){
 	var query = [
-    // @TODO
+    'MATCH (n: FeatureStatus)',
+    'RETURN n'
 	];
 
 	var params = {
@@ -57,13 +61,15 @@ function getAllFeatureStatus(){
 	});
 }
 
-function createFeatureStatus(name, identifier, description){
+function createFeatureStatus(status){
 
  var query = [
-   // @TODO
+   'CREATE (n: FeatureStatus {status : {status}})',
+   'RETURN n'
   ];
 
   var params = {
+    status: status
   };
 
  return neodb.cypherAsync({
@@ -72,14 +78,19 @@ function createFeatureStatus(name, identifier, description){
   });
 }
 
-function updateFeatureStatus(id, name, identifier, description)
+function updateFeatureStatus(id, status)
 {
     var query =
     [
-	       // @TODO
+      'MATCH (n: FeatureStatus)',
+      'WHERE id(n) = {id}',
+      'SET n.status = {status}',
+      'RETURN n'
     ];
 
     var params = {
+      id: Number(id),
+      status: status
     };
 
     return neodb.cypherAsync({

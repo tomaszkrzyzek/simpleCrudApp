@@ -22,14 +22,14 @@ function getAllUser(req, res, next) {
 }
 
 function createUser(req, res, next) {
- service.createUser(req.body.name, req.body.identifier, req.body.description).then(function(data){
+ service.createUser(req.body.login, req.body.password, req.body.firstName, req.body.lastName).then(function(data){
   res.send(data[0]);
  });
 }
 
 function updateUser(req, res, next) {
   var id = req.params[0];
-  service.updateUser(id, req.body.name, req.body.identifier, req.body.description).then(function(data){
+  service.updateUser(id, req.body.login, req.body.password, req.body.firstName, req.body.lastName).then(function(data){
   res.send(data[0]);
  });
 }

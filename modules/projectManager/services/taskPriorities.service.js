@@ -15,7 +15,9 @@ module.exports = {
 
 function getTaskPriority(id){
 	var query = [
-		// @TODO
+    'MATCH (n: TaskPriority)',
+		'WHERE id(n) = {id}',
+		'RETURN n'
 	];
 
 	var params = {
@@ -30,7 +32,8 @@ function getTaskPriority(id){
 
 function deleteTaskPriority(id){
 	var query = [
-		// @TODO
+    'MATCH (n: TaskPriority) WHERE ID(n)={id}',
+		'DELETE n'
 	];
 
 	var params = {
@@ -45,7 +48,8 @@ function deleteTaskPriority(id){
 
 function getAllTaskPriority(){
 	var query = [
-    // @TODO
+    'MATCH (n: TaskPriority)',
+    'RETURN n'
 	];
 
 	var params = {
@@ -57,13 +61,15 @@ function getAllTaskPriority(){
 	});
 }
 
-function createTaskPriority(name, identifier, description){
+function createTaskPriority(priority){
 
  var query = [
-   // @TODO
+   'CREATE (n: TaskPriority {priority : {priority}})',
+   'RETURN n'
   ];
 
   var params = {
+    priority: priority
   };
 
  return neodb.cypherAsync({
@@ -72,14 +78,19 @@ function createTaskPriority(name, identifier, description){
   });
 }
 
-function updateTaskPriority(id, name, identifier, description)
+function updateTaskPriority(id, priority)
 {
     var query =
     [
-	       // @TODO
+      'MATCH (n: TaskPriority)',
+      'WHERE id(n) = {id}',
+      'SET n.priority = {priority}',
+      'RETURN n'
     ];
 
     var params = {
+      id: Number(id),
+      priority: priority
     };
 
     return neodb.cypherAsync({

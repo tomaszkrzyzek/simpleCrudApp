@@ -24,14 +24,14 @@ function getAllTaskPriority(req, res, next) {
 }
 
 function createTaskPriority(req, res, next) {
- service.createTaskPriority(req.body.name, req.body.identifier, req.body.description).then(function(data){
+ service.createTaskPriority(req.body.priority).then(function(data){
   res.send(data[0]);
  });
 }
 
 function updateTaskPriority(req, res, next) {
   var id = req.params[0];
-  service.updateTaskPriority(id, req.body.name, req.body.identifier, req.body.description).then(function(data){
+  service.updateTaskPriority(id, req.body.priority).then(function(data){
   res.send(data[0]);
  });
 }

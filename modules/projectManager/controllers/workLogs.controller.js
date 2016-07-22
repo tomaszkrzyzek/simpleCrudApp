@@ -24,14 +24,14 @@ function getAllWorkLog(req, res, next) {
 }
 
 function createWorkLog(req, res, next) {
- service.createWorkLog(req.body.name, req.body.identifier, req.body.description).then(function(data){
+ service.createWorkLog(req.body.taskId, req.body.userId, req.body.date, req.body.hours).then(function(data){
   res.send(data[0]);
  });
 }
 
 function updateWorkLog(req, res, next) {
   var id = req.params[0];
-  service.updateWorkLog(id, req.body.name, req.body.identifier, req.body.description).then(function(data){
+  service.updateWorkLog(id, req.body.taskId, req.body.userId, req.body.date, req.body.hours).then(function(data){
   res.send(data[0]);
  });
 }

@@ -15,7 +15,9 @@ module.exports = {
 
 function getFeature(id){
 	var query = [
-		// @TODO
+    'OPTIONAL MATCH (n: Feature)-[r]-()',
+		'WHERE id(n) = {id}',
+		'RETURN n, r'
 	];
 
 	var params = {
@@ -30,7 +32,13 @@ function getFeature(id){
 
 function deleteFeature(id){
 	var query = [
-		// @TODO
+    'MATCH (n: Feature) WHERE ID(n)={id}',
+    'OPTIONAL MATCH (n)-[r]-()',
+    'WITH n, r',
+    'OPTIONAL MATCH (t: Task)-[:HAS_TASK]-(n)',
+    'WITH n, r, t',
+    'OPTIONAL MATCH (t)-[r1]-()',
+    'DELETE r, n, r1, t'
 	];
 
 	var params = {
@@ -45,7 +53,10 @@ function deleteFeature(id){
 
 function getAllFeature(){
 	var query = [
-    // @TODO
+    'MATCH (n: Feature)',
+    'WITH DISTINCT n',
+    'OPTIONAL MATCH (n)-[r]-()',
+    'RETURN n, r'
 	];
 
 	var params = {
@@ -57,13 +68,32 @@ function getAllFeature(){
 	});
 }
 
-function createFeature(name, identifier, description){
+function createFeature(projectId, subject, description, featureStatusId, featurePriorityId, userId, featureCategoryId, estimatedHours){
 
  var query = [
-   // @TODO
+   'MATCH (p: Project)',
+   'WHERE id(p) = {projectId}',
+   'MATCH (fs: FeatureStatus)',
+   'WHERE id(fs) = {featureStatusId}',
+   'MATCH (fp: FeaturePriority)',
+   'WHERE id(fp) = {featurePriorityId}',
+   'MATCH (u: User)',
+   'WHERE id(u) = {userId}',
+   'MATCH (fc: FeatureCategory)',
+   'WHERE id(fc) = {featureCategoryId}',
+   'CREATE (n: Feature {subject: {subject}, description: {description}, estimatedHours: {estimatedHours}})-[:HAS_PROJECT]->(p), (n)-[:HAS_FEATURE_STATUS]->(fs), (n)-[:HAS_FEATURE_PRIORITY]->(fp), (n)-[:HAS_USER]->(u), (n)-[:HAS_FEATURE_CATEGORY]->(fc)',
+   'RETURN n'
   ];
 
   var params = {
+    projectId : Number(projectId),
+    subject : subject,
+    description : description, 
+    featureStatusId : Number(featureStatusId),
+    featurePriorityId : Number(featurePriorityId),
+    userId : Number(userId),
+    featureCategoryId : Number(featureCategoryId),
+    estimatedHours : estimatedHours
   };
 
  return neodb.cypherAsync({
@@ -72,14 +102,45 @@ function createFeature(name, identifier, description){
   });
 }
 
-function updateFeature(id, name, identifier, description)
-{
+function updateFeature(id, projectId, subject, description, featureStatusId, featurePriorityId, userId, featureCategoryId, estimatedHours){
     var query =
     [
-	       // @TODO
+      'MATCH (n: Feature)',
+      'WHERE id(n) = {id}',
+      'OPTIONAL MATCH (n)-[r]-()',
+      'DELETE r',
+      'WITH n',
+      'MATCH (p: Project)',
+      'WHERE id(p) = {projectId}',
+      'MATCH (fs: FeatureStatus)',
+      'WHERE id(fs) = {featureStatusId}',
+      'MATCH (fp: FeaturePriority)',
+      'WHERE id(fp) = {featurePriorityId}',
+      'MATCH (u: User)',
+      'WHERE id(u) = {userId}',
+      'MATCH (fc: FeatureCategory)',
+      'WHERE id(fc) = {featureCategoryId}',
+      'SET n.subject = {subject}',
+      'SET n.description = {description}',
+      'SET n.estimatedHours = {estimatedHours}',
+      'MERGE (n)-[:HAS_PROJECT]->(p)',
+      'MERGE(n)-[:HAS_FEATURE_STATUS]->(fs)',
+      'MERGE (n)-[:HAS_FEATURE_PRIORITY]->(fp)',
+      'MERGE (n)-[:HAS_USER]->(u)',
+      'MERGE (n)-[:HAS_FEATURE_CATEGORY]->(fc)',
+      'RETURN n'
     ];
 
     var params = {
+      id: Number(id),
+      projectId : Number(projectId),
+      subject : subject,
+      description : description, 
+      featureStatusId : Number(featureStatusId),
+      featurePriorityId : Number(featurePriorityId),
+      userId : Number(userId),
+      featureCategoryId : Number(featureCategoryId),
+      estimatedHours : estimatedHours
     };
 
     return neodb.cypherAsync({

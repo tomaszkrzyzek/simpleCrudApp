@@ -1,6 +1,4 @@
 var express = require('express');
-// @TODO
-// change uppercase filename to lowercase
 var service = require('./../services/featureStatuses.service');
 
 function deleteFeatureStatus(req, res, next) {
@@ -24,14 +22,14 @@ function getAllFeatureStatus(req, res, next) {
 }
 
 function createFeatureStatus(req, res, next) {
- service.createFeatureStatus(req.body.name, req.body.identifier, req.body.description).then(function(data){
+ service.createFeatureStatus(req.body.status).then(function(data){
   res.send(data[0]);
  });
 }
 
 function updateFeatureStatus(req, res, next) {
   var id = req.params[0];
-  service.updateFeatureStatus(id, req.body.name, req.body.identifier, req.body.description).then(function(data){
+  service.updateFeatureStatus(id, req.body.status).then(function(data){
   res.send(data[0]);
  });
 }

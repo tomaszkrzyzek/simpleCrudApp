@@ -15,7 +15,9 @@ module.exports = {
 
 function getTaskTracker(id){
 	var query = [
-		// @TODO
+    'MATCH (n: TaskTracker)',
+		'WHERE id(n) = {id}',
+		'RETURN n'
 	];
 
 	var params = {
@@ -30,7 +32,8 @@ function getTaskTracker(id){
 
 function deleteTaskTracker(id){
 	var query = [
-		// @TODO
+    'MATCH (n: TaskTracker) WHERE ID(n)={id}',
+		'DELETE n'
 	];
 
 	var params = {
@@ -45,7 +48,8 @@ function deleteTaskTracker(id){
 
 function getAllTaskTracker(){
 	var query = [
-    // @TODO
+    'MATCH (n: TaskTracker)',
+    'RETURN n'
 	];
 
 	var params = {
@@ -57,13 +61,15 @@ function getAllTaskTracker(){
 	});
 }
 
-function createTaskTracker(name, identifier, description){
+function createTaskTracker(tracker){
 
  var query = [
-   // @TODO
+   'CREATE (n: TaskTracker {tracker : {tracker}})',
+   'RETURN n'
   ];
 
   var params = {
+    tracker: tracker
   };
 
  return neodb.cypherAsync({
@@ -72,14 +78,19 @@ function createTaskTracker(name, identifier, description){
   });
 }
 
-function updateTaskTracker(id, name, identifier, description)
+function updateTaskTracker(id, tracker)
 {
     var query =
     [
-	       // @TODO
+      'MATCH (n: TaskTracker)',
+      'WHERE id(n) = {id}',
+      'SET n.tracker = {tracker}',
+      'RETURN n'
     ];
 
     var params = {
+      id: Number(id),
+      tracker: tracker
     };
 
     return neodb.cypherAsync({

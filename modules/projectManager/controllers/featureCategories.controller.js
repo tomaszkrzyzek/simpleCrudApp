@@ -1,6 +1,4 @@
 var express = require('express');
-// @TODO
-// change uppercase filename to lowercase
 var service = require('./../services/featureCategories.service');
 
 function deleteFeatureCategory(req, res, next) {
@@ -24,14 +22,14 @@ function getAllFeatureCategory(req, res, next) {
 }
 
 function createFeatureCategory(req, res, next) {
- service.createFeatureCategory(req.body.name, req.body.identifier, req.body.description).then(function(data){
+ service.createFeatureCategory(req.body.category).then(function(data){
   res.send(data[0]);
  });
 }
 
 function updateFeatureCategory(req, res, next) {
   var id = req.params[0];
-  service.updateFeatureCategory(id, req.body.name, req.body.identifier, req.body.description).then(function(data){
+  service.updateFeatureCategory(id, req.body.category).then(function(data){
   res.send(data[0]);
  });
 }

@@ -24,14 +24,14 @@ function getAllFeaturePriority(req, res, next) {
 }
 
 function createFeaturePriority(req, res, next) {
- service.createFeaturePriority(req.body.name, req.body.identifier, req.body.description).then(function(data){
+ service.createFeaturePriority(req.body.priority).then(function(data){
   res.send(data[0]);
  });
 }
 
 function updateFeaturePriority(req, res, next) {
   var id = req.params[0];
-  service.updateFeaturePriority(id, req.body.name, req.body.identifier, req.body.description).then(function(data){
+  service.updateFeaturePriority(id, req.body.priority).then(function(data){
   res.send(data[0]);
  });
 }

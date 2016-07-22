@@ -32,9 +32,17 @@ function getProject(id){
 
 function deleteProject(id){
 	var query = [
-		'MATCH (n:Project) WHERE ID(n)={id}',
-		'OPTIONAL MATCH (n)-[r]-()',
-		'DELETE r, n'
+    'MATCH (n: Project) WHERE ID(n)={id}',
+    'OPTIONAL MATCH (n)-[r]-()',
+    'WITH n, r',
+    'OPTIONAL MATCH (f: Feature)-[:HAS_FEATURE]-(n)',
+    'WITH n, r, f',
+    'OPTIONAL MATCH (f)-[r1]-()',
+    'WITH r, n, r1, f',
+    'OPTIONAL MATCH (t: Task)-[:HAS_TASK]-(f)',
+    'WITH n, r, r1, f, t',
+    'OPTIONAL MATCH (t)-[r2]-()',
+    'DELETE r, n, r1, f, r2, t'
 	];
 
 	var params = {
@@ -65,8 +73,8 @@ function getAllProject(){
 function createProject(name, identifier, description){
 
  var query = [
-   'CREATE (n:Project { name : {name} , identifier: {identifier}, description: {description} })',
-   'return n'
+   'CREATE (n: Project {name : {name} , identifier: {identifier}, description: {description}})',
+   'RETURN n'
   ];
 
   var params = {

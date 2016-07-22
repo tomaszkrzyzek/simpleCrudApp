@@ -15,7 +15,9 @@ module.exports = {
 
 function getWorkLog(id){
 	var query = [
-		// @TODO
+    'MATCH (n: WorkLog)-[r]-()',
+		'WHERE id(n) = {id}',
+		'RETURN n, r'
 	];
 
 	var params = {
@@ -30,7 +32,9 @@ function getWorkLog(id){
 
 function deleteWorkLog(id){
 	var query = [
-		// @TODO
+    'MATCH (n: WorkLog) WHERE ID(n)={id}',
+		'MATCH (n)-[r]-()',
+		'DELETE r, n'
 	];
 
 	var params = {
@@ -45,7 +49,8 @@ function deleteWorkLog(id){
 
 function getAllWorkLog(){
 	var query = [
-    // @TODO
+    'MATCH (n: WorkLog)-[r]-()',
+    'RETURN n, r'
 	];
 
 	var params = {
@@ -57,13 +62,23 @@ function getAllWorkLog(){
 	});
 }
 
-function createWorkLog(name, identifier, description){
+function createWorkLog(taskId, userId, date, hours){
 
  var query = [
-   // @TODO
+   'MATCH (t: Task)',
+   'WHERE id(t) = {taskId}',
+   'MATCH (u: User)',
+   'WHERE id(u) = {userId}',
+   'CREATE (n: WorkLog {date: {date}, hours: {hours}})-[:HAS_TASK]->(t), (n)-[:HAS_USER]->(u)',
+   'RETURN n'
   ];
 
+
   var params = {
+    taskId: Number(taskId),
+    userId: Number(userId),
+    date: date,
+    hours: Number(hours)
   };
 
  return neodb.cypherAsync({
@@ -72,14 +87,30 @@ function createWorkLog(name, identifier, description){
   });
 }
 
-function updateWorkLog(id, name, identifier, description)
-{
+function updateWorkLog(id, taskId, userId, date, hours){
     var query =
     [
-	       // @TODO
+      'MATCH (n: WorkLog)',
+      'WHERE id(n) = {id}',
+      'MATCH (n)-[r]-()',
+      'DELETE r',
+      'WITH n',
+      'MATCH (t: Task)',
+      'WHERE id(t) = {taskId}',
+      'MATCH (u: User)',
+      'WHERE id(u) = {userId}',
+      'SET n.date = {date}',
+      'MERGE (n)-[:HAS_TASK]->(t)',
+      'MERGE (n)-[:HAS_USER]->(u)',
+      'RETURN n'
     ];
 
     var params = {
+      id: Number(id),
+      taskId: Number(taskId),
+      userId: Number(userId),
+      date: date,
+      hours: Number(hours)
     };
 
     return neodb.cypherAsync({

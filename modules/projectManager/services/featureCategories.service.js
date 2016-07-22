@@ -15,7 +15,9 @@ module.exports = {
 
 function getFeatureCategory(id){
 	var query = [
-		// @TODO
+    'MATCH (n: FeatureCategory)',
+		'WHERE id(n) = {id}',
+		'RETURN n'
 	];
 
 	var params = {
@@ -30,7 +32,8 @@ function getFeatureCategory(id){
 
 function deleteFeatureCategory(id){
 	var query = [
-		// @TODO
+    'MATCH (n: FeatureCategory) WHERE ID(n)={id}',
+		'DELETE n'
 	];
 
 	var params = {
@@ -45,7 +48,8 @@ function deleteFeatureCategory(id){
 
 function getAllFeatureCategory(){
 	var query = [
-    // @TODO
+    'MATCH (n: FeatureCategory)',
+    'RETURN n'
 	];
 
 	var params = {
@@ -57,13 +61,15 @@ function getAllFeatureCategory(){
 	});
 }
 
-function createFeatureCategory(name, identifier, description){
+function createFeatureCategory(category){
 
  var query = [
-   // @TODO
+   'CREATE (n: FeatureCategory {category : {category}})',
+   'RETURN n'
   ];
 
   var params = {
+    category: category
   };
 
  return neodb.cypherAsync({
@@ -72,14 +78,18 @@ function createFeatureCategory(name, identifier, description){
   });
 }
 
-function updateFeatureCategory(id, name, identifier, description)
-{
+function updateFeatureCategory(id, category){
     var query =
     [
-	       // @TODO
+      'MATCH (n: FeatureCategory)',
+      'WHERE id(n) = {id}',
+      'SET n.category = {category}',
+      'RETURN n'
     ];
 
     var params = {
+      id: Number(id),
+      category: category
     };
 
     return neodb.cypherAsync({

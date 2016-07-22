@@ -15,7 +15,9 @@ module.exports = {
 
 function getFeaturePriority(id){
 	var query = [
-		// @TODO
+    'MATCH (n: FeaturePriority)',
+		'WHERE id(n) = {id}',
+		'RETURN n'
 	];
 
 	var params = {
@@ -30,7 +32,8 @@ function getFeaturePriority(id){
 
 function deleteFeaturePriority(id){
 	var query = [
-		// @TODO
+    'MATCH (n: FeaturePriority) WHERE ID(n)={id}',
+		'DELETE n'
 	];
 
 	var params = {
@@ -45,7 +48,8 @@ function deleteFeaturePriority(id){
 
 function getAllFeaturePriority(){
 	var query = [
-    // @TODO
+    'MATCH (n: FeaturePriority)',
+    'RETURN n'
 	];
 
 	var params = {
@@ -57,13 +61,15 @@ function getAllFeaturePriority(){
 	});
 }
 
-function createFeaturePriority(name, identifier, description){
+function createFeaturePriority(priority){
 
  var query = [
-   // @TODO
+   'CREATE (n: FeaturePriority {priority : {priority}})',
+   'RETURN n'
   ];
 
   var params = {
+    priority: Number(priority)
   };
 
  return neodb.cypherAsync({
@@ -72,14 +78,18 @@ function createFeaturePriority(name, identifier, description){
   });
 }
 
-function updateFeaturePriority(id, name, identifier, description)
-{
+function updateFeaturePriority(id, priority){
     var query =
     [
-	       // @TODO
+      'MATCH (n: FeaturePriority)',
+      'WHERE id(n) = {id}',
+      'SET n.priority = {priority}',
+      'RETURN n'
     ];
 
     var params = {
+      id: Number(id),
+      priority: Number(priority)
     };
 
     return neodb.cypherAsync({

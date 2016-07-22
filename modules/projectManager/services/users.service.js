@@ -15,7 +15,9 @@ module.exports = {
 
 function getUser(id){
 	var query = [
-		// @TODO
+    'MATCH (n: User)',
+		'WHERE id(n) = {id}',
+		'RETURN n'
 	];
 
 	var params = {
@@ -30,7 +32,13 @@ function getUser(id){
 
 function deleteUser(id){
 	var query = [
-		// @TODO
+    'MATCH (n: User) WHERE ID(n)={id}',
+		'OPTIONAL MATCH (n)-[r]-()',
+    'WITH n, r',
+    'OPTIONAL MATCH (wl: WorkLog)-[:HAS_USER]->(n)',
+    'WITH n, r, wl',
+    'OPTIONAL MATCH (wl)-[r1]-()',
+    'DELETE r, n, r1, wl'
 	];
 
 	var params = {
@@ -45,7 +53,8 @@ function deleteUser(id){
 
 function getAllUser(){
 	var query = [
-    // @TODO
+    'MATCH (n: User)',
+    'RETURN n'
 	];
 
 	var params = {
@@ -57,13 +66,18 @@ function getAllUser(){
 	});
 }
 
-function createUser(name, identifier, description){
+function createUser(login, password, firstName, lastName){
 
  var query = [
-   // @TODO
+   'CREATE (n: User {login : {login}, password : {password}, firstName : {firstName}, lastName : {lastName}})',
+   'RETURN n'
   ];
 
   var params = {
+    login: login,
+    password: password,
+    firstName: firstName,
+    lastName: lastName
   };
 
  return neodb.cypherAsync({
@@ -72,14 +86,25 @@ function createUser(name, identifier, description){
   });
 }
 
-function updateUser(id, name, identifier, description)
+function updateUser(id, login, password, firstName, lastName)
 {
     var query =
     [
-	       // @TODO
+      'MATCH (n: User)',
+      'WHERE id(n) = {id}',
+      'SET n.login = {login}',
+      'SET n.password = {password}',
+      'SET n.firstName = {firstName}',
+      'SET n.lastName = {lastName}',
+      'RETURN n'
     ];
 
     var params = {
+      id: Number(id),
+      login: login,
+      password: password,
+      firstName: firstName,
+      lastName: lastName
     };
 
     return neodb.cypherAsync({

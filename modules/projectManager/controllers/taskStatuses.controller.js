@@ -24,14 +24,14 @@ function getAllTaskStatus(req, res, next) {
 }
 
 function createTaskStatus(req, res, next) {
- service.createTaskStatus(req.body.name, req.body.identifier, req.body.description).then(function(data){
+ service.createTaskStatus(req.body.status).then(function(data){
   res.send(data[0]);
  });
 }
 
 function updateTaskStatus(req, res, next) {
   var id = req.params[0];
-  service.updateTaskStatus(id, req.body.name, req.body.identifier, req.body.description).then(function(data){
+  service.updateTaskStatus(id, req.body.status).then(function(data){
   res.send(data[0]);
  });
 }

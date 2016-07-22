@@ -24,14 +24,14 @@ function getAllTaskTracker(req, res, next) {
 }
 
 function createTaskTracker(req, res, next) {
- service.createTaskTracker(req.body.name, req.body.identifier, req.body.description).then(function(data){
+ service.createTaskTracker(req.body.tracker).then(function(data){
   res.send(data[0]);
  });
 }
 
 function updateTaskTracker(req, res, next) {
   var id = req.params[0];
-  service.updateTaskTracker(id, req.body.name, req.body.identifier, req.body.description).then(function(data){
+  service.updateTaskTracker(id, req.body.tracker).then(function(data){
   res.send(data[0]);
  });
 }
