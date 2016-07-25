@@ -40,11 +40,12 @@ projectManagerRouter.delete(/^\/featurestatuses\/([0-9_]+)$/, featureStatusesCon
 projectManagerRouter.get('/featurestatuses/', featureStatusesController.getAllFeatureStatus);
 projectManagerRouter.post('/featurestatuses/', featureStatusesController.createFeatureStatus);
 
-projectManagerRouter.get(/^\/projects\/([0-9_]+)$/, projectsController.getProject);
-projectManagerRouter.put(/^\/projects\/([0-9_]+)$/, projectsController.updateProject);
-projectManagerRouter.delete(/^\/projects\/([0-9_]+)$/, projectsController.deleteProject);
-projectManagerRouter.get('/projects/', projectsController.getAllProject);
+projectManagerRouter.get('/projects/:id', projectsController.getProject);
+projectManagerRouter.put('/projects/:id', projectsController.updateProject);
+projectManagerRouter.delete('/projects/:id', projectsController.deleteProject);
+// projectManagerRouter.get('/projects/', projectsController.getAllProject);
 projectManagerRouter.post('/projects/', projectsController.createProject);
+projectManagerRouter.get('/projects', projectsController.getProjectPage);
 
 projectManagerRouter.get(/^\/taskcategories\/([0-9_]+)$/, taskCategoriesController.getTaskCategory);
 projectManagerRouter.put(/^\/taskcategories\/([0-9_]+)$/, taskCategoriesController.updateTaskCategory);

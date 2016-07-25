@@ -10,7 +10,8 @@ module.exports = {
   updateProject: updateProject,
   createProject: createProject,
   deleteProject: deleteProject,
-  getAllProject: getAllProject
+  // getAllProject: getAllProject,
+  getProjectPage: getProjectPage
 };
 
 function getProject(id){
@@ -55,20 +56,20 @@ function deleteProject(id){
 	});
 }
 
-function getAllProject(){
-	var query = [
-    'MATCH (n: Project)',
-    'RETURN n'
-	];
-
-	var params = {
-	};
-
-	return neodb.cypherAsync({
-		query : query.join('\n'),
-		params: params
-	});
-}
+// function getAllProject(){
+// 	var query = [
+//     'MATCH (n: Project)',
+//     'RETURN n'
+// 	];
+//
+// 	var params = {
+// 	};
+//
+// 	return neodb.cypherAsync({
+// 		query : query.join('\n'),
+// 		params: params
+// 	});
+// }
 
 function createProject(name, identifier, description){
 
@@ -107,4 +108,41 @@ function updateProject(id, name, identifier, description)
     query : query.join('\n'),
     params: params
     });
+}
+
+function getProjectPage(fromItem, toItem){
+  var start = 0;
+  var quantity = Number.MAX_SAFE_INTEGER;
+  var query;
+
+  if(fromItem && toItem){
+    start = fromItem-1;
+    quantity = toItem-fromItem+1;
+
+    query = [
+      'MATCH (n: Project)',
+      'RETURN (n)',
+      'SKIP {start}',
+      'LIMIT {quantity}'
+    ];
+  } else{
+    console.log(start);
+    console.log(quantity);
+    query = [
+      'MATCH (n: Project)',
+      'RETURN (n)',
+    ];
+  }
+
+
+
+	var params = {
+		start: Number(start),
+    quantity: Number(quantity)
+	};
+
+	return neodb.cypherAsync({
+		query : query.join('\n'),
+		params: params
+	});
 }
