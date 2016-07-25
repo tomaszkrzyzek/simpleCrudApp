@@ -110,35 +110,31 @@ function updateProject(id, name, identifier, description)
     });
 }
 
-function getProjectPage(fromItem, toItem){
+function getProjectPage(fromItem, toItem, projectQuery){
   var start = 0;
   var quantity = Number.MAX_SAFE_INTEGER;
-  var query;
 
   if(fromItem && toItem){
     start = fromItem-1;
     quantity = toItem-fromItem+1;
-
     query = [
       'MATCH (n: Project)',
+      'WHERE n.name CONTAINS {projectQuery} OR n.identifier CONTAINS {projectQuery} OR n.description CONTAINS {projectQuery}',
       'RETURN (n)',
       'SKIP {start}',
       'LIMIT {quantity}'
     ];
   } else{
-    console.log(start);
-    console.log(quantity);
     query = [
       'MATCH (n: Project)',
       'RETURN (n)',
     ];
   }
 
-
-
 	var params = {
 		start: Number(start),
-    quantity: Number(quantity)
+    quantity: Number(quantity),
+    projectQuery: projectQuery
 	};
 
 	return neodb.cypherAsync({

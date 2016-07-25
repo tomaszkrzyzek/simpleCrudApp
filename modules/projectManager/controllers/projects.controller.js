@@ -15,11 +15,11 @@ function getProject (req, res, next) {
  });
 }
 
-function getAllProject(req, res, next) {
- service.getAllProject().then(function(data){
-  res.send(data);
- });
-}
+// function getAllProject(req, res, next) {
+//  service.getAllProject().then(function(data){
+//   res.send(data);
+//  });
+// }
 
 function createProject(req, res, next) {
  service.createProject(req.body.name, req.body.identifier, req.body.description).then(function(data){
@@ -37,7 +37,11 @@ function updateProject(req, res, next) {
 function getProjectPage(req, res, next) {
   var fromItem = req.query.from;
   var toItem = req.query.to;
-  service.getProjectPage(fromItem, toItem).then(function(data){
+  var projectQuery = req.query.query;
+  if(!projectQuery){
+    projectQuery = '';
+  }
+  service.getProjectPage(fromItem, toItem, projectQuery).then(function(data){
   res.send(data);
  });
 }
@@ -48,5 +52,5 @@ module.exports = {
   updateProject: updateProject,
   createProject: createProject,
   deleteProject: deleteProject,
-  getAllProject: getAllProject
+  // getAllProject: getAllProject
 };
