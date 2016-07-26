@@ -46,6 +46,7 @@ projectManagerRouter.delete('/projects/:id', projectsController.deleteProject);
 // projectManagerRouter.get('/projects/', projectsController.getAllProject);
 projectManagerRouter.post('/projects/', projectsController.createProject);
 projectManagerRouter.get('/projects', projectsController.getProjectPage);
+projectManagerRouter.get('/projectsnumber', projectsController.getProjectNumber);
 
 projectManagerRouter.get(/^\/taskcategories\/([0-9_]+)$/, taskCategoriesController.getTaskCategory);
 projectManagerRouter.put(/^\/taskcategories\/([0-9_]+)$/, taskCategoriesController.updateTaskCategory);
