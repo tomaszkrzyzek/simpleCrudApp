@@ -11,14 +11,16 @@ module.exports = {
     createProject: createProject,
     deleteProject: deleteProject,
     getProjectNumber: getProjectNumber,
-    getProjectPage: getProjectPage
+    getProjectPage: getProjectPage,
 };
 
 function getProject(id) {
     var query = [
         'MATCH (n: Project)',
         'WHERE id(n) = {id}',
-        'RETURN n'
+        'OPTIONAL MATCH (n)-[r]-()',
+        'WITH n, collect(r) as rel',
+        'RETURN n, rel'
     ];
 
     var params = {
@@ -127,7 +129,9 @@ function getProjectPage(fromItem, toItem, projectQuery) {
     }
 
     query.push(
-        'RETURN n'
+      'OPTIONAL MATCH (n)-[r]-()',
+      'WITH DISTINCT n, collect(r) as rel',
+      'RETURN n, rel'
     );
 
     if (fromItem && toItem) {

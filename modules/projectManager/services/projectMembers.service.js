@@ -9,18 +9,21 @@ module.exports = {
   deleteProjectMember: deleteProjectMember,
   getAllProjectMember: getAllProjectMember,
   createProjectMember: createProjectMember,
-  updateProjectMember: updateProjectMember
+  updateProjectMember: updateProjectMember,
+  getProjectMembersByUser: getProjectMembersByUser,
+  getProjectMembersByProject: getProjectMembersByProject
 };
 
-function deleteProjectMember(id){
+function deleteProjectMember(projectId, userId){
 	var query = [
-    // nie dziala
-    'MATCH ()-[r: HAS_USER]-() WHERE id(r)={id}',
+    'MATCH (p: Project)-[r: HAS_USER]-(u: User)',
+    'WHERE id(p)={projectId} AND id(u)={userId}',
 		'DELETE r'
 	];
 
 	var params = {
-		id: Number(id)
+		projectId: Number(projectId),
+    userId: Number(userId)
 	};
 
 	return neodb.cypherAsync({
@@ -38,7 +41,41 @@ function getAllProjectMember(id){
 	];
 
 	var params = {
-    id: id
+    id: Number(id)
+  };
+
+	return neodb.cypherAsync({
+		query : query.join('\n'),
+		params: params
+	});
+}
+
+function getProjectMembersByProject(id){
+	var query = [
+    'MATCH (p: Project)-[r: HAS_USER]->(u: User)',
+    'WHERE ID(p) = {id}',
+    'RETURN collect(u) as users'
+	];
+
+	var params = {
+    id: Number(id)
+  };
+
+	return neodb.cypherAsync({
+		query : query.join('\n'),
+		params: params
+	});
+}
+
+function getProjectMembersByUser(id){
+	var query = [
+    'MATCH (p: Project)-[r: HAS_USER]->(u: User)',
+    'WHERE id(u) = {id}',
+    'RETURN collect(p) as projects'
+	];
+
+	var params = {
+    id: Number(id)
   };
 
 	return neodb.cypherAsync({

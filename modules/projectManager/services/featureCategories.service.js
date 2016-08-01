@@ -16,8 +16,10 @@ module.exports = {
 function getFeatureCategory(id){
 	var query = [
     'MATCH (n: FeatureCategory)',
-		'WHERE id(n) = {id}',
-		'RETURN n'
+    'WHERE id(n) = {id}',
+    'OPTIONAL MATCH (n)-[r]-()',
+    'WITH n, collect(r) as rel',
+    'RETURN n, rel'
 	];
 
 	var params = {

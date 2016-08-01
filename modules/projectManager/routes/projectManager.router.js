@@ -13,6 +13,7 @@ var taskTrackersController = require('./../controllers/taskTrackers.controller')
 var usersController = require('./../controllers/users.controller');
 var workLogsController = require('./../controllers/workLogs.controller');
 var projectMembersController = require('./../controllers/projectMembers.controller');
+var relationshipController = require('./../controllers/relationship.controller');
 
 projectManagerRouter = express.Router();
 
@@ -31,8 +32,9 @@ projectManagerRouter.post('/featurepriorities/', featurePrioritiesController.cre
 projectManagerRouter.get(/^\/features\/([0-9_]+)$/, featuresController.getFeature);
 projectManagerRouter.put(/^\/features\/([0-9_]+)$/, featuresController.updateFeature);
 projectManagerRouter.delete(/^\/features\/([0-9_]+)$/, featuresController.deleteFeature);
-projectManagerRouter.get('/features/', featuresController.getAllFeature);
+// projectManagerRouter.get('/features/', featuresController.getAllFeature);
 projectManagerRouter.post('/features/', featuresController.createFeature);
+projectManagerRouter.get('/features/', featuresController.getFeaturePage);
 
 projectManagerRouter.get(/^\/featurestatuses\/([0-9_]+)$/, featureStatusesController.getFeatureStatus);
 projectManagerRouter.put(/^\/featurestatuses\/([0-9_]+)$/, featureStatusesController.updateFeatureStatus);
@@ -92,8 +94,14 @@ projectManagerRouter.post('/worklogs/', workLogsController.createWorkLog);
 
 projectManagerRouter.get(/^\/projectmembers\/([0-9_]+)$/, projectMembersController.getAllProjectMember);
 projectManagerRouter.put(/^\/projectmembers\/([0-9_]+)$/, projectMembersController.updateProjectMember);
-projectManagerRouter.delete(/^\/projectmembers\/([0-9_]+)$/, projectMembersController.deleteProjectMember);
+projectManagerRouter.delete('/projectmembers/', projectMembersController.deleteProjectMember);
 projectManagerRouter.post('/projectmembers/', projectMembersController.createProjectMember);
+projectManagerRouter.get(/^\/projectmembers\/user\/([0-9_]+)$/, projectMembersController.getProjectMembersByUser);
+projectManagerRouter.get(/^\/projectmembers\/project\/([0-9_]+)$/, projectMembersController.getProjectMembersByProject);
+
+projectManagerRouter.delete('/relationship/', relationshipController.removeRelationship);
+projectManagerRouter.post('/relationship/', relationshipController.addRelationship);
+
 // projectManagerRouter.get('/projectmembers/', projectMembersController.getAllProjectMember);
 
 module.exports = projectManagerRouter;

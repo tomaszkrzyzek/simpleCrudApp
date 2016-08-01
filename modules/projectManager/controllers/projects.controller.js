@@ -38,7 +38,6 @@ function getProjectPage(req, res, next) {
   var fromItem = req.query.from;
   var toItem = req.query.to;
   var projectQuery = req.query.query;
-  console.log(req.query);
   if(!projectQuery){
     projectQuery = '';
   }

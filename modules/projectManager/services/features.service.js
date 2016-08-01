@@ -10,14 +10,18 @@ module.exports = {
   updateFeature: updateFeature,
   createFeature: createFeature,
   deleteFeature: deleteFeature,
-  getAllFeature: getAllFeature
+  getAllFeature: getAllFeature,
+  getFeaturePage: getFeaturePage,
+  getFeatureNumber: getFeatureNumber
 };
 
 function getFeature(id){
 	var query = [
-    'OPTIONAL MATCH (n: Feature)-[r]-()',
-		'WHERE id(n) = {id}',
-		'RETURN n, r'
+    'MATCH (n: Feature)',
+    'WHERE id(n) = {id}',
+    'OPTIONAL MATCH (n)-[r]-()',
+    'WITH n, collect(r) as rel',
+    'RETURN n, rel'
 	];
 
 	var params = {
@@ -54,9 +58,9 @@ function deleteFeature(id){
 function getAllFeature(){
 	var query = [
     'MATCH (n: Feature)',
-    'WITH DISTINCT n',
     'OPTIONAL MATCH (n)-[r]-()',
-    'RETURN n, r'
+    'WITH DISTINCT n, collect(r) as rel',
+    'RETURN n, rel'
 	];
 
 	var params = {
@@ -69,7 +73,6 @@ function getAllFeature(){
 }
 
 function createFeature(projectId, subject, description, featureStatusId, featurePriorityId, userId, featureCategoryId, estimatedHours){
-
  var query = [
    'MATCH (p: Project)',
    'WHERE id(p) = {projectId}',
@@ -147,4 +150,57 @@ function updateFeature(id, projectId, subject, description, featureStatusId, fe
     query : query.join('\n'),
     params: params
     });
+}
+
+function getFeaturePage(fromItem, toItem, featureQuery) {
+    var start = 0;
+    var quantity = Number.MAX_SAFE_INTEGER;
+
+    query = [
+        'MATCH (n: Feature)'
+    ];
+    if (featureQuery) {
+        query.push(
+            'WHERE n.subject CONTAINS {featureQuery} OR n.description CONTAINS {featureQuery}'
+        );
+    }
+
+    query.push(
+      'OPTIONAL MATCH (n)-[r]-()',
+      'WITH DISTINCT n, collect(r) as rel',
+      'RETURN n, rel'
+    );
+
+    if (fromItem && toItem) {
+        start = fromItem;
+        quantity = toItem - fromItem + 1;
+        query.push(
+            'SKIP {start} LIMIT {quantity}'
+        );
+    }
+    var params = {
+        start: Number(start),
+        quantity: Number(quantity),
+        featureQuery: featureQuery
+    };
+
+    return neodb.cypherAsync({
+        query: query.join('\n'),
+        params: params
+    });
+}
+
+function getFeatureNumber(){
+	var query = [
+    'MATCH (n: Feature)',
+    'RETURN count(n) AS sum'
+	];
+
+	var params = {
+	};
+
+	return neodb.cypherAsync({
+		query : query.join('\n'),
+		params: params
+	});
 }

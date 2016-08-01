@@ -22,7 +22,7 @@ function getAllFeature(req, res, next) {
 }
 
 function createFeature(req, res, next) {
- service.createFeature(req.body.projectId, req.body.subject, req.body.description, req.body.featureStatusId, req.body.featurePriorityId, req.body.userId, req.body.featureCategoryId, req.body.estimatedHours).then(function(data){
+ service.createFeature(req.body.project, req.body.subject, req.body.description, req.body.status, req.body.priority, req.body.author, req.body.category, req.body.estimatedHours).then(function(data){
   res.send(data[0]);
  });
 }
@@ -34,10 +34,30 @@ function updateFeature(req, res, next) {
  });
 }
 
+function getFeaturePage(req, res, next) {
+  var fromItem = req.query.from;
+  var toItem = req.query.to;
+  var featureQuery = req.query.query;
+  if(!featureQuery){
+    featureQuery = '';
+  }
+  service.getFeaturePage(fromItem, toItem, featureQuery).then(function(data){
+  res.send(data);
+ });
+}
+
+function getFeatureNumber(req, res, next) {
+ service.getFeatureNumber().then(function(data){
+  res.send(data[0]);
+ });
+}
+
 module.exports = {
   getFeature: getFeature,
   updateFeature: updateFeature,
   createFeature: createFeature,
   deleteFeature: deleteFeature,
-  getAllFeature: getAllFeature
+  getAllFeature: getAllFeature,
+  getFeaturePage: getFeaturePage,
+  getFeatureNumber: getFeatureNumber
 };
