@@ -99,8 +99,8 @@ projectManagerRouter.post('/projectmembers/', projectMembersController.createPro
 projectManagerRouter.get(/^\/projectmembers\/user\/([0-9_]+)$/, projectMembersController.getProjectMembersByUser);
 projectManagerRouter.get(/^\/projectmembers\/project\/([0-9_]+)$/, projectMembersController.getProjectMembersByProject);
 
-projectManagerRouter.delete('/relationship/', relationshipController.removeRelationship);
-projectManagerRouter.post('/relationship/', relationshipController.addRelationship);
+projectManagerRouter.delete('/relationships/', relationshipController.removeRelationship);
+projectManagerRouter.post('/relationships/', relationshipController.addRelationship);
 
 // projectManagerRouter.get('/projectmembers/', projectMembersController.getAllProjectMember);
 

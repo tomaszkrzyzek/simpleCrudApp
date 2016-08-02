@@ -9,7 +9,8 @@ module.exports = {
 function removeRelationship(req, res, next) {
   var firstId = req.query.first;
   var secondId = req.query.second;
-  service.removeRelationship(firstId, secondId).then(function(data){
+  var relName = req.query.name;
+  service.removeRelationship(firstId, secondId, relName).then(function(data){
   res.send(data[0]);
  });
 }
@@ -17,7 +18,7 @@ function removeRelationship(req, res, next) {
 function addRelationship(req, res, next) {
   var firstId = req.query.first;
   var secondId = req.query.second;
-  var relName = req.query.n;
+  var relName = req.query.name;
   service.addRelationship(firstId, secondId, relName).then(function(data){
   res.send(data[0]);
  });

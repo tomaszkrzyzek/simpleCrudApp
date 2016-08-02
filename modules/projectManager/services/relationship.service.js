@@ -10,9 +10,9 @@ module.exports = {
   addRelationship: addRelationship
 };
 
-function removeRelationship(firstNodeId, secondNodeId){
+function removeRelationship(firstNodeId, secondNodeId, relationshipName){
   var query = [
-    'MATCH (a)-[r]-(b)',
+    'MATCH (a)-[r:'+relationshipName+']-(b)',
     'WHERE id(a)={firstNodeId}',
     'AND id(b)={secondNodeId}',
     'DELETE r'
@@ -20,7 +20,8 @@ function removeRelationship(firstNodeId, secondNodeId){
 
   var params = {
     firstNodeId: Number(firstNodeId),
-    secondNodeId: Number(secondNodeId)
+    secondNodeId: Number(secondNodeId),
+    relationshipName: relationshipName
   };
 
   return neodb.cypherAsync({
