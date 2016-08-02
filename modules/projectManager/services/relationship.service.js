@@ -30,7 +30,6 @@ function removeRelationship(firstNodeId, secondNodeId){
 }
 
 function addRelationship(firstNodeId, secondNodeId, relationshipName){
-  console.log("dupa");
   var query = [
     'MATCH (a)',
     'WHERE id(a)={firstNodeId}',

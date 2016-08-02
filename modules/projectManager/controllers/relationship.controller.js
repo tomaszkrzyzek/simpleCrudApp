@@ -17,8 +17,8 @@ function removeRelationship(req, res, next) {
 function addRelationship(req, res, next) {
   var firstId = req.query.first;
   var secondId = req.query.second;
-  var relName = req.query.name;
-  service.removeRelationship(firstId, secondId, relName).then(function(data){
+  var relName = req.query.n;
+  service.addRelationship(firstId, secondId, relName).then(function(data){
   res.send(data[0]);
  });
 }
