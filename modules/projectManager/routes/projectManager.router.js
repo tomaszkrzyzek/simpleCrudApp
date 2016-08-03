@@ -35,6 +35,7 @@ projectManagerRouter.delete(/^\/features\/([0-9_]+)$/, featuresController.delete
 // projectManagerRouter.get('/features/', featuresController.getAllFeature);
 projectManagerRouter.post('/features/', featuresController.createFeature);
 projectManagerRouter.get('/features/', featuresController.getFeaturePage);
+projectManagerRouter.get('/featuresnumber/', featuresController.getFeatureNumber);
 
 projectManagerRouter.get(/^\/featurestatuses\/([0-9_]+)$/, featureStatusesController.getFeatureStatus);
 projectManagerRouter.put(/^\/featurestatuses\/([0-9_]+)$/, featureStatusesController.updateFeatureStatus);

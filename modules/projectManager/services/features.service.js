@@ -72,30 +72,15 @@ function getAllFeature(){
 	});
 }
 
-function createFeature(projectId, subject, description, featureStatusId, featurePriorityId, userId, featureCategoryId, estimatedHours){
+function createFeature(subject, description, estimatedHours){
  var query = [
-   'MATCH (p: Project)',
-   'WHERE id(p) = {projectId}',
-   'MATCH (fs: FeatureStatus)',
-   'WHERE id(fs) = {featureStatusId}',
-   'MATCH (fp: FeaturePriority)',
-   'WHERE id(fp) = {featurePriorityId}',
-   'MATCH (u: User)',
-   'WHERE id(u) = {userId}',
-   'MATCH (fc: FeatureCategory)',
-   'WHERE id(fc) = {featureCategoryId}',
-   'CREATE (n: Feature {subject: {subject}, description: {description}, estimatedHours: {estimatedHours}})-[:HAS_PROJECT]->(p), (n)-[:HAS_FEATURE_STATUS]->(fs), (n)-[:HAS_FEATURE_PRIORITY]->(fp), (n)-[:HAS_USER]->(u), (n)-[:HAS_FEATURE_CATEGORY]->(fc)',
+   'CREATE (n: Feature {subject: {subject}, description: {description}, estimatedHours: {estimatedHours}})',
    'RETURN n'
   ];
 
   var params = {
-    projectId : Number(projectId),
     subject : subject,
     description : description, 
-    featureStatusId : Number(featureStatusId),
-    featurePriorityId : Number(featurePriorityId),
-    userId : Number(userId),
-    featureCategoryId : Number(featureCategoryId),
     estimatedHours : estimatedHours
   };
 
@@ -105,44 +90,21 @@ function createFeature(projectId, subject, description, featureStatusId, featur
   });
 }
 
-function updateFeature(id, projectId, subject, description, featureStatusId, featurePriorityId, userId, featureCategoryId, estimatedHours){
+function updateFeature(id,subject, description, estimatedHours){
     var query =
     [
       'MATCH (n: Feature)',
       'WHERE id(n) = {id}',
-      'OPTIONAL MATCH (n)-[r]-()',
-      'DELETE r',
-      'WITH n',
-      'MATCH (p: Project)',
-      'WHERE id(p) = {projectId}',
-      'MATCH (fs: FeatureStatus)',
-      'WHERE id(fs) = {featureStatusId}',
-      'MATCH (fp: FeaturePriority)',
-      'WHERE id(fp) = {featurePriorityId}',
-      'MATCH (u: User)',
-      'WHERE id(u) = {userId}',
-      'MATCH (fc: FeatureCategory)',
-      'WHERE id(fc) = {featureCategoryId}',
       'SET n.subject = {subject}',
       'SET n.description = {description}',
       'SET n.estimatedHours = {estimatedHours}',
-      'MERGE (n)-[:HAS_PROJECT]->(p)',
-      'MERGE(n)-[:HAS_FEATURE_STATUS]->(fs)',
-      'MERGE (n)-[:HAS_FEATURE_PRIORITY]->(fp)',
-      'MERGE (n)-[:HAS_USER]->(u)',
-      'MERGE (n)-[:HAS_FEATURE_CATEGORY]->(fc)',
       'RETURN n'
     ];
 
     var params = {
       id: Number(id),
-      projectId : Number(projectId),
       subject : subject,
       description : description, 
-      featureStatusId : Number(featureStatusId),
-      featurePriorityId : Number(featurePriorityId),
-      userId : Number(userId),
-      featureCategoryId : Number(featureCategoryId),
       estimatedHours : estimatedHours
     };
 
