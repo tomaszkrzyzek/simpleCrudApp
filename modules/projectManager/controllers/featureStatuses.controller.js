@@ -17,7 +17,14 @@ function getFeatureStatus (req, res, next) {
 
 function getAllFeatureStatus(req, res, next) {
  service.getAllFeatureStatus().then(function(data){
-  res.send(data);
+   var fs = [];
+   data.forEach(function (r){
+     fs.push({
+       id: r.n._id,
+       name: r.n.properties.status
+     });
+   });
+  res.send(fs);
  });
 }
 

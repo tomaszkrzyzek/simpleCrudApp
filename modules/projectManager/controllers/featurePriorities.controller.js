@@ -19,7 +19,14 @@ function getFeaturePriority (req, res, next) {
 
 function getAllFeaturePriority(req, res, next) {
  service.getAllFeaturePriority().then(function(data){
-  res.send(data);
+   var fs = [];
+   data.forEach(function (r){
+     fs.push({
+       id: r.n._id,
+       name: r.n.properties.priority
+     });
+   });
+   res.send(fs);
  });
 }
 

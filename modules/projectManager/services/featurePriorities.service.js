@@ -62,7 +62,6 @@ function getAllFeaturePriority(){
 }
 
 function createFeaturePriority(priority){
-
  var query = [
    'CREATE (n: FeaturePriority {priority : {priority}})',
    'RETURN n'
