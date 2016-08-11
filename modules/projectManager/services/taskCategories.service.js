@@ -33,7 +33,7 @@ function getTaskCategory(id){
 function deleteTaskCategory(id){
 	var query = [
     'MATCH (n: TaskCategory) WHERE ID(n)={id}',
-		'DELETE n'
+		'DETACH DELETE n'
 	];
 
 	var params = {

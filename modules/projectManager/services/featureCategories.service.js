@@ -35,7 +35,7 @@ function getFeatureCategory(id){
 function deleteFeatureCategory(id){
 	var query = [
     'MATCH (n: FeatureCategory) WHERE ID(n)={id}',
-		'DELETE n'
+		'DETACH DELETE n'
 	];
 
 	var params = {

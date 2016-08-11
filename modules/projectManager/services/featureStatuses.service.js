@@ -33,7 +33,7 @@ function getFeatureStatus(id){
 function deleteFeatureStatus(id){
 	var query = [
     'MATCH (n: FeatureStatus) WHERE ID(n)={id}',
-		'DELETE n'
+		'DETACH DELETE n'
 	];
 
 	var params = {

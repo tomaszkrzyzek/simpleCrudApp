@@ -33,7 +33,7 @@ function getFeaturePriority(id){
 function deleteFeaturePriority(id){
 	var query = [
     'MATCH (n: FeaturePriority) WHERE ID(n)={id}',
-		'DELETE n'
+		'DETACH DELETE n'
 	];
 
 	var params = {

@@ -33,7 +33,7 @@ function getTaskPriority(id){
 function deleteTaskPriority(id){
 	var query = [
     'MATCH (n: TaskPriority) WHERE ID(n)={id}',
-		'DELETE n'
+		'DETACH DELETE n'
 	];
 
 	var params = {

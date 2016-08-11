@@ -33,7 +33,7 @@ function getTaskStatus(id){
 function deleteTaskStatus(id){
 	var query = [
     'MATCH (n: TaskStatus) WHERE ID(n)={id}',
-		'DELETE n'
+		'DETACH DELETE n'
 	];
 
 	var params = {

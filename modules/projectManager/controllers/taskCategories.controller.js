@@ -17,7 +17,14 @@ function getTaskCategory (req, res, next) {
 
 function getAllTaskCategory(req, res, next) {
  service.getAllTaskCategory().then(function(data){
-  res.send(data);
+   var fs = [];
+   data.forEach(function (r){
+     fs.push({
+       id: r.n._id,
+       name: r.n.properties.category
+     });
+   });
+   res.send(fs);
  });
 }
 

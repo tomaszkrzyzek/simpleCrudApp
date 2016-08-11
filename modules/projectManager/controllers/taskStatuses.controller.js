@@ -19,7 +19,14 @@ function getTaskStatus (req, res, next) {
 
 function getAllTaskStatus(req, res, next) {
  service.getAllTaskStatus().then(function(data){
-  res.send(data);
+   var fs = [];
+   data.forEach(function (r){
+     fs.push({
+       id: r.n._id,
+       name: r.n.properties.status
+     });
+   });
+   res.send(fs);
  });
 }
 

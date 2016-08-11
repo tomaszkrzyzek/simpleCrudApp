@@ -1,5 +1,6 @@
 var express = require('express');
 
+var authRouter = require('../../auth/routes/auth.router');
 var featureCategoriesController = require('./../controllers/featureCategories.controller');
 var featurePrioritiesController = require('./../controllers/featurePriorities.controller');
 var featuresController = require('./../controllers/features.controller');
@@ -16,6 +17,8 @@ var projectMembersController = require('./../controllers/projectMembers.controll
 var relationshipController = require('./../controllers/relationship.controller');
 
 projectManagerRouter = express.Router();
+
+projectManagerRouter.use('/auth', authRouter);
 
 projectManagerRouter.get(/^\/featurecategories\/([0-9_]+)$/, featureCategoriesController.getFeatureCategory);
 projectManagerRouter.put(/^\/featurecategories\/([0-9_]+)$/, featureCategoriesController.updateFeatureCategory);
@@ -66,8 +69,9 @@ projectManagerRouter.post('/taskpriorities/', taskPrioritiesController.createTas
 projectManagerRouter.get(/^\/tasks\/([0-9_]+)$/, tasksController.getTask);
 projectManagerRouter.put(/^\/tasks\/([0-9_]+)$/, tasksController.updateTask);
 projectManagerRouter.delete(/^\/tasks\/([0-9_]+)$/, tasksController.deleteTask);
-projectManagerRouter.get('/tasks/', tasksController.getAllTask);
+projectManagerRouter.get('/tasks', tasksController.getTaskPage);
 projectManagerRouter.post('/tasks/', tasksController.createTask);
+projectManagerRouter.get('/tasksnumber/', tasksController.getTaskNumber);
 
 projectManagerRouter.get(/^\/taskstatuses\/([0-9_]+)$/, taskStatusesController.getTaskStatus);
 projectManagerRouter.put(/^\/taskstatuses\/([0-9_]+)$/, taskStatusesController.updateTaskStatus);
@@ -86,6 +90,7 @@ projectManagerRouter.put(/^\/users\/([0-9_]+)$/, usersController.updateUser);
 projectManagerRouter.delete(/^\/users\/([0-9_]+)$/, usersController.deleteUser);
 projectManagerRouter.get('/users/', usersController.getAllUser);
 projectManagerRouter.post('/users/', usersController.createUser);
+projectManagerRouter.post('/getuserby/', usersController.getUserBy);
 
 projectManagerRouter.get(/^\/worklogs\/([0-9_]+)$/, workLogsController.getWorkLog);
 projectManagerRouter.put(/^\/worklogs\/([0-9_]+)$/, workLogsController.updateWorkLog);

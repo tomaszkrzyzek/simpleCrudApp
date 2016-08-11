@@ -1,17 +1,44 @@
 var neo4j = require('neo4j');
 var Promise = require('bluebird');
 var bodyParser = require('body-parser');
+var _ = require('lodash');
 
 var graphDatabase = Promise.promisifyAll(neo4j).GraphDatabase;
 var neodb = new graphDatabase('http://neo4j:password@localhost:7474');
 
 module.exports = {
+  getUserBy: getUserBy,
   getUser: getUser,
   updateUser: updateUser,
   createUser: createUser,
   deleteUser: deleteUser,
   getAllUser: getAllUser
 };
+
+function getUserBy(propertyName, propertyValue){
+  var query = [
+    'MATCH (n: User)',
+		'WHERE n.' + propertyName + ' = {propertyValue}',
+		'RETURN n'
+	];
+
+	var params = {
+    propertyValue: propertyValue
+	};
+
+	return neodb.cypherAsync({
+		query : query.join('\n'),
+		params: params
+	}).then(function(result){
+    if(result && result[0]){
+      var user = _.clone(result[0].n.properties);
+      user.id = result[0].n._id;
+      return user;
+    } else{
+      return null;
+    }
+  });
+}
 
 function getUser(id){
 	var query = [
@@ -27,7 +54,15 @@ function getUser(id){
 	return neodb.cypherAsync({
 		query : query.join('\n'),
 		params: params
-	});
+	}).then(function(result){
+    if(result && result[0]){
+      var user = _.clone(result[0].n.properties);
+      user.id = result[0].n._id;
+      return user;
+    } else{
+      return null;
+    }
+  });
 }
 
 function deleteUser(id){

@@ -34,7 +34,26 @@ function updateUser(req, res, next) {
  });
 }
 
+function getUserBy(req, res, next) {
+  if(req.body.propertyName && req.body.propertyValue){
+    service.getUserBy(req.body.propertyName, req.body.propertyValue).then(function(data){
+      res.json(data);
+    }).catch(function(){
+      res.json({
+        success: false,
+        error: 'Database error'
+      });
+    });
+  } else{
+    res.json({
+      success: false,
+      error: 'Invalid request data'
+    });
+  }
+}
+
 module.exports = {
+  getUserBy: getUserBy,
   getUser: getUser,
   updateUser: updateUser,
   createUser: createUser,

@@ -19,7 +19,14 @@ function getTaskTracker (req, res, next) {
 
 function getAllTaskTracker(req, res, next) {
  service.getAllTaskTracker().then(function(data){
-  res.send(data);
+   var fs = [];
+   data.forEach(function (r){
+     fs.push({
+       id: r.n._id,
+       name: r.n.properties.tracker
+     });
+   });
+   res.send(fs);
  });
 }
 

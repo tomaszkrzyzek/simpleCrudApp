@@ -33,7 +33,7 @@ function getTaskTracker(id){
 function deleteTaskTracker(id){
 	var query = [
     'MATCH (n: TaskTracker) WHERE ID(n)={id}',
-		'DELETE n'
+		'DETACH DELETE n'
 	];
 
 	var params = {
